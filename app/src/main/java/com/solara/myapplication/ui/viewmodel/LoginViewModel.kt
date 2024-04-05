@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.solara.myapplication.Constants
 import com.solara.myapplication.data.exceptions.EmptyDataException
 import com.solara.myapplication.data.repository.UserRepository
+import com.solara.myapplication.data.repository.UserRepositoryImpl
 import com.solara.myapplication.data.responses.LoginResponse
 import com.solara.myapplication.ui.status.LoginUiStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,7 +51,6 @@ class LoginViewModel @Inject internal constructor(private val userRepository: Us
                 _loginStatus.value = state
             }
         }
-
     }
 
 }

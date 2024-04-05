@@ -1,41 +1,30 @@
 package com.solara.myapplication.data.repository
 
-
-import android.util.Log
-import com.solara.myapplication.Constants.PASSWORD
-import com.solara.myapplication.Constants.USERNAME
-import com.solara.myapplication.data.exceptions.EmptyDataException
-import com.solara.myapplication.data.exceptions.GenericException
 import com.solara.myapplication.data.responses.LoginResponse
-import javax.inject.Inject
+
 
 /**
- * Repository for managing user-related data.
+ * The `UserRepository` interface defines the operations that can be performed on user data within the application.
+ * Utilizing an interface for the UserRepository provides several advantages:
  *
- * Provides abstraction over the data layer, offering an API to perform
- * operations like authentication, fetching user profiles, and updating user
- * information. This repository hides the underlying data source, which could
- * be a remote server, a local database, or a combination of both.
+ * - **Abstraction**: The `UserRepository` interface abstracts the details of data access implementations from the rest of the application.
+ *   This means that the underlying data access mechanism (e.g., local database, remote API) can change, but the rest of the application
+ *   remains unaffected because it interacts with this interface, not directly with the implementation.
  *
+ * - **Testing**: Interfaces make unit testing and integration testing easier. Mock implementations of the `UserRepository` can be
+ *   created to test other parts of the application without requiring access to a real database or network.
+ *
+ * - **Flexibility**: It allows for multiple implementations of the UserRepository. For example, an application might initially
+ *   retrieve user data from a local database but later needs to switch to a remote API. This change can be easily accommodated
+ *   by providing a new implementation of the `UserRepository` interface.
+ *
+ * - **Dependency Inversion Principle**: Adhering to this principle from SOLID principles, the `UserRepository` interface
+ *   helps in inverting the dependency. Higher-level modules should not depend on lower-level modules but should depend on abstractions.
+ *   This principle enhances the modularity and extensibility of the application.
+ *
+ * Implementations of this interface are responsible for managing user data, such as creating, reading, updating, and deleting user records.
  */
-class UserRepository @Inject constructor() {
+interface UserRepository {
 
-    /**
-     * Simulates a login with given credentials.
-     * Use @see USERNAME and @see PASSWORD constants to simulate a successful login.
-     */
-    @Throws(EmptyDataException::class)
-    fun simulateLogin(username: String, password: String): LoginResponse {
-        if (username.isBlank() || password.isBlank()) {
-            throw EmptyDataException()
-        }
-
-        return if (username == USERNAME && password == PASSWORD) {
-            LoginResponse.SUCCESS
-        } else {
-            LoginResponse.WRONG_PASSWORD
-        }
-    }
-
-
+    fun simulateLogin(username: String, password: String): LoginResponse
 }
